@@ -1,0 +1,20 @@
+{
+    "name": "shared-portfolio-code",
+    "version": "0.0.1",
+    "description": "This package contains general typescript code that is responsible for calculating various values such as IRR, ROE, Interest, Amortization, etc...",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "/dist"
+    ],
+    "devDependencies": {
+        "@babel/preset-typescript": "^7.23.3",
+        "@types/jest": "^29.5.10",
+        "jest": "^29.7.0",
+        "ts-jest": "^29.1.1",
+        "typescript": "^5.3.2"
+    },
+    "scripts": {
+        "test": "jest"
+    }
+}
