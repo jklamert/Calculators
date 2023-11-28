@@ -1,6 +1,6 @@
 {
     "name": "shared-portfolio-code",
-    "version": "0.0.1-beta",
+    "version": "0.1.0",
     "description": "This package contains general typescript code that is responsible for calculating various values such as IRR, ROE, Interest, Amortization, etc...",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -22,22 +22,20 @@
         "publish-dryrun": "npm run build && npm publish --dry-run",
         "patch": "npm version patch",
         "minor": "npm version minor",
-        "major": "npm version major" 
+        "major": "npm version major"
     },
-
-
-      "repository": {
+    "repository": {
         "type": "git",
         "url": "git+https://github.com/jklamert/shared.git"
-      },
-      "keywords": [
+    },
+    "keywords": [
         "simple interest",
         "typescript"
-      ],
-      "author": "Jason Klamert <jklamert@gmail.com>",
-      "license": "MIT",
-      "bugs": {
+    ],
+    "author": "Jason Klamert <jklamert@gmail.com>",
+    "license": "MIT",
+    "bugs": {
         "url": "https://github.com/jklamert/shared/issues"
-      },
-      "homepage": "https://github.com/jklamert/shared#readme"
+    },
+    "homepage": "https://github.com/jklamert/shared#readme"
 }
