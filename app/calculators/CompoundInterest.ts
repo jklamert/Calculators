@@ -79,11 +79,15 @@ export default class CompoundInterest {
     return compound;
   }
 
+  /**
+   * Method to apply the compound interest using the class members as the configuration.
+   * @returns New Balance
+   */
   calculate() {
     this._validate();
     const compoundNumber = this._processCompoundMode();
 
-    //A = P(1 + r/n)^nt
+    //A = P(1 + r/n)^nt (Compount Interest Formula)
     const rateAsDecimal = this.rate / 100;
 
     const superscript = compoundNumber * this.years;

@@ -1,4 +1,4 @@
-import SimpleInterest from "../calculators/SimpleInterest";
+import SimpleInterest from "../calculators/simpleInterest";
 
 describe("Simple Interest", () => {
   it("should raise error on invalid years.", () => {
