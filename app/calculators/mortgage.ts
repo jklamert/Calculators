@@ -5,7 +5,6 @@ export default class Mortgage {
   amount = 0;
   rate = 0;
   years = 0;
-  compound = null;
   downPayment = 0;
 
   constructor(
@@ -48,7 +47,6 @@ export default class Mortgage {
    */
   calculate() {
     this._validate();
-    const compoundNumber = 1; //Annually
     const rateAsDecimal = this.rate / 100;
 
     let loanAmnt = this.amount;
@@ -65,33 +63,40 @@ export default class Mortgage {
     Additionally, because the mortgage interest rate you’re charged is an annual interest rate that does represent the interest that’s supposed to be paid over the whole year, you want to divide this by 12 to get the monthly interest rate.
     N = Number of payments: This is the total number of payments in your loan term. For instance, if it’s a 30-year mortgage with monthly payments, there are 360 payments.
     */
+    const rate = rateAsDecimal / 12;
     const totalPayments = this.years * 12;
-    const step1 = 1 + rateAsDecimal;
+    const step1 = 1 + rate;
     const step2 = Math.pow(step1, totalPayments);
-    const step3 = rateAsDecimal * step2;
-    const topOfFrac = this.amount * step3;
-    const bottomFrac = Math.pow(step1, totalPayments - 1);
-    const monthlyPayment = topOfFrac / bottomFrac;
-    const yearlyPayment = monthlyPayment * 12;
+    const step3 = rate * step2;
+    const topOfFrac = loanAmnt * step3;
 
-    let interestAccumulator = 0;
-    const amortizationEntries = [];
-    for (let count = 0; count < this.years; count++) {
-      const interest = loanAmnt * rateAsDecimal;
-      const principleAmount = yearlyPayment - interest;
-      const amortizedObjEntry = {
-        interest: interest,
-        principle: principleAmount,
-      };
-      amortizationEntries.push(amortizedObjEntry);
-    }
+    const bottomFrac = step2 - 1;
+
+    let monthlyPayment = topOfFrac / bottomFrac;
+    monthlyPayment = Number.parseFloat(monthlyPayment.toFixed(2));
+
+    const yearlyPayment = Number.parseFloat((monthlyPayment * 12).toFixed(2));
+
+    // let interestAccumulator = 0;
+    // const amortizationEntries = [];
+    // for (let count = 0; count < this.years; count++) {
+    //   const interest = Number.parseFloat((loanAmnt * rateAsDecimal).toFixed(2));
+    //   const principleAmount = yearlyPayment - interest;
+    //   const amortizedObjEntry = {
+    //     interest: interest,
+    //     principle: principleAmount,
+    //   };
+
+    //   amortizationEntries.push(amortizedObjEntry);
+    //   interestAccumulator += interest;
+    // }
 
     return {
       totalNumberOfPayments: totalPayments,
-      totalInterest: interestAccumulator,
+      // totalInterest: Number.parseFloat(interestAccumulator.toFixed(2)),
       monthlyPayment: monthlyPayment,
-      yearlyPayment: yearlyPayment,
-      amortizationTable: amortizationEntries,
+      yearlyPayment: Number.parseFloat(yearlyPayment.toFixed(2)),
+      // amortizationTable: amortizationEntries,
     };
   }
 }
