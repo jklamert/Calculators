@@ -1,6 +1,6 @@
 {
     "name": "shared-portfolio-code",
-    "version": "0.1.0-beta",
+    "version": "0.2.0-beta",
     "description": "This package contains general typescript code that is responsible for calculating various values such as IRR, ROE, Interest, Amortization, etc...",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
