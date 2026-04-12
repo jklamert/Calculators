@@ -3,9 +3,16 @@
     "module": "commonjs",
     "target": "es2019",
     "declaration": true,
-    "outDir": "./dist"
+    "rootDir": "./app",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": [
     "app/**/*"
+  ],
+  "exclude": [
+    "app/__tests__/**"
   ]
 }

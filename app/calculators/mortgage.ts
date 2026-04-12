@@ -1,5 +1,19 @@
+export interface MortgageResult {
+  totalNumberOfPayments: number;
+  monthlyPayment: number;
+  yearlyPayment: number;
+}
+
 /**
- * Class responsible for Mortgage calculations.
+ * Calculates monthly and yearly mortgage payments using the standard
+ * amortization formula: M = P[r(1+r)^n] / [(1+r)^n - 1].
+ *
+ * @example
+ * ```typescript
+ * const m = new Mortgage(300000, 60000, 6, 30);
+ * const result = m.calculate();
+ * result.monthlyPayment; // 1438.92
+ * ```
  */
 export default class Mortgage {
   amount = 0;
@@ -7,6 +21,12 @@ export default class Mortgage {
   years = 0;
   downPayment = 0;
 
+  /**
+   * @param amount - Total property price (must be > 0).
+   * @param downPayment - Down payment amount (>= 0, must be less than amount).
+   * @param ratePercentage - Annual interest rate as a percentage (0 < rate < 100).
+   * @param years - Loan term in years (positive integer).
+   */
   constructor(
     amount: number,
     downPayment: number,
@@ -20,39 +40,43 @@ export default class Mortgage {
   }
 
   /**
-   * Method that validates the Mortgage members.
+   * Validates that all inputs are within acceptable ranges.
+   * @throws {Error} If any input is invalid.
    */
   _validate() {
-    if (this.amount < 0) {
-      throw new Error("Mortgage requires a amount greater than zero.");
+    if (this.amount <= 0) {
+      throw new Error("Mortgage requires an amount greater than zero.");
     }
-    if (this.downPayment) {
-      if (this.downPayment < 0) {
-        throw new Error("The down payment must be positive.");
-      }
+    if (this.downPayment < 0) {
+      throw new Error("The down payment must be zero or greater.");
+    }
+    if (this.downPayment >= this.amount) {
+      throw new Error(
+        "The down payment must be less than the mortgage amount."
+      );
     }
     if (this.rate <= 0 || this.rate >= 100) {
-      throw new Error("Mortgage requires 0 <= rate <= 100.");
-    }
-    if (this.years < 0 || !Number.isInteger(this.years)) {
       throw new Error(
-        "Mortgage requires a time span >= 0 and must be an integer."
+        "Mortgage requires a rate greater than 0 and less than 100."
+      );
+    }
+    if (this.years <= 0 || !Number.isInteger(this.years)) {
+      throw new Error(
+        "Mortgage requires a time span > 0 and must be a positive integer."
       );
     }
   }
 
   /**
-   * Method to apply the Mortgage using the class members as the configuration.
-   * @returns New Balance
+   * Calculates the monthly payment, yearly payment, and total number of payments.
+   * @returns A {@link MortgageResult} with monthlyPayment, yearlyPayment, and totalNumberOfPayments.
+   * @throws {Error} If any input is invalid.
    */
-  calculate() {
+  calculate(): MortgageResult {
     this._validate();
     const rateAsDecimal = this.rate / 100;
 
-    let loanAmnt = this.amount;
-    if (this.downPayment) {
-      loanAmnt = loanAmnt - this.downPayment;
-    }
+    const loanAmnt = this.amount - this.downPayment;
 
     //FORMULA
     //M = P [ I(1 + I)^N ] / [ (1 + I)^N − 1]
@@ -77,26 +101,10 @@ export default class Mortgage {
 
     const yearlyPayment = Number.parseFloat((monthlyPayment * 12).toFixed(2));
 
-    // let interestAccumulator = 0;
-    // const amortizationEntries = [];
-    // for (let count = 0; count < this.years; count++) {
-    //   const interest = Number.parseFloat((loanAmnt * rateAsDecimal).toFixed(2));
-    //   const principleAmount = yearlyPayment - interest;
-    //   const amortizedObjEntry = {
-    //     interest: interest,
-    //     principle: principleAmount,
-    //   };
-
-    //   amortizationEntries.push(amortizedObjEntry);
-    //   interestAccumulator += interest;
-    // }
-
     return {
       totalNumberOfPayments: totalPayments,
-      // totalInterest: Number.parseFloat(interestAccumulator.toFixed(2)),
       monthlyPayment: monthlyPayment,
-      yearlyPayment: Number.parseFloat(yearlyPayment.toFixed(2)),
-      // amortizationTable: amortizationEntries,
+      yearlyPayment: yearlyPayment,
     };
   }
 }

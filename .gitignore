@@ -1,2 +1,21 @@
 node_modules
 dist
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/

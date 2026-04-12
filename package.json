@@ -1,18 +1,17 @@
 {
-    "name": "shared-portfolio-code",
-    "version": "0.2.0",
-    "description": "This package contains general typescript code that is responsible for calculating various values such as IRR, ROE, Interest, Amortization, etc...",
+    "name": "calculators",
+    "version": "0.4.0",
+    "description": "A TypeScript library of financial calculators including interest, mortgage, amortization, retirement savings, ROI, tax brackets, and more.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
         "/dist"
     ],
     "devDependencies": {
-        "@babel/preset-typescript": "^7.23.3",
-        "@types/jest": "^29.5.10",
-        "jest": "^29.7.0",
+        "@types/jest": "^30.0.0",
+        "jest": "^30.3.0",
         "ts-jest": "^29.1.1",
-        "typescript": "^5.3.2"
+        "typescript": "^6.0.2"
     },
     "scripts": {
         "test": "jest",
@@ -26,16 +25,23 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/jklamert/shared.git"
+        "url": "git+https://github.com/jklamert/Calculators.git"
     },
     "keywords": [
-        "simple interest",
-        "typescript"
+        "typescript",
+        "financial",
+        "calculator",
+        "interest",
+        "mortgage",
+        "amortization",
+        "retirement",
+        "roi",
+        "tax"
     ],
-    "author": "Jason Klamert <jklamert@gmail.com>",
+    "author": "",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/jklamert/shared/issues"
+        "url": "https://github.com/jklamert/Calculators/issues"
     },
-    "homepage": "https://github.com/jklamert/shared#readme"
+    "homepage": "https://github.com/jklamert/Calculators#readme"
 }

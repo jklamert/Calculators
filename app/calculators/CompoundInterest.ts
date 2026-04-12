@@ -5,14 +5,26 @@ export enum Compound {
 }
 
 /**
- * Class responsible for compound interest calculations.
+ * Calculates compound interest using the formula A = P(1 + r/n)^(nt).
+ *
+ * @example
+ * ```typescript
+ * const ci = new CompoundInterest(10000, 10, 10, Compound.Annually);
+ * ci.calculate(); // 25937.42
+ * ```
  */
 export default class CompoundInterest {
-  principal = 0;
-  rate = 0;
-  years = 0;
-  compound = null;
+  principal: number;
+  rate: number;
+  years: number;
+  compound: Compound;
 
+  /**
+   * @param principal - The initial amount invested or borrowed (must be > 0).
+   * @param ratePercentage - Annual interest rate as a percentage, 0-100.
+   * @param years - Time period in years (>= 0).
+   * @param compound - Compounding frequency: Monthly, Quarterly, or Annually.
+   */
   constructor(
     principal: number,
     ratePercentage: number,
@@ -26,10 +38,11 @@ export default class CompoundInterest {
   }
 
   /**
-   * Method that validates the compound interest members.
+   * Validates that all inputs are within acceptable ranges.
+   * @throws {Error} If any input is invalid.
    */
   _validate() {
-    if (this.principal < 0) {
+    if (this.principal <= 0) {
       throw new Error(
         "Compound Interest requires a principal greater than zero."
       );
@@ -55,39 +68,34 @@ export default class CompoundInterest {
   }
 
   /**
-   * Method to process the compounding modes and obtain the decimal years to compound by.
-   * @returns Compound in decimal years.
+   * Maps the compounding mode to the number of compounding periods per year.
+   * @returns Number of compounding periods per year (1, 4, or 12).
    */
-  _processCompoundMode() {
-    let compound = null;
+  _processCompoundMode(): number {
     switch (this.compound) {
       case Compound.Annually:
-        compound = 1;
-        break;
+        return 1;
       case Compound.Monthly:
-        compound = 12;
-        break;
+        return 12;
       case Compound.Quarterly:
-        compound = 4;
-        break;
+        return 4;
       default:
-        //Never should hit this as the validator should catch it.
         throw new Error(
           "Compound Interest calculator only supports three compounding modes: Annually, Monthly, or Quarterly."
         );
     }
-    return compound;
   }
 
   /**
-   * Method to apply the compound interest using the class members as the configuration.
-   * @returns New Balance
+   * Computes the total amount after applying compound interest.
+   * @returns The total amount (principal + compounded interest), rounded to 2 decimal places.
+   * @throws {Error} If any input is invalid.
    */
-  calculate() {
+  calculate(): number {
     this._validate();
     const compoundNumber = this._processCompoundMode();
 
-    //A = P(1 + r/n)^nt (Compount Interest Formula)
+    //A = P(1 + r/n)^nt (Compound Interest Formula)
     const rateAsDecimal = this.rate / 100;
 
     const superscript = compoundNumber * this.years;
